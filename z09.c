@@ -75,9 +75,9 @@ int main(int argc, char *argv[])
     {
         array2[size2 - 2] = argv[argc - 1];
     }
-    array1[size1 - 1] = NULL;
-    array2[size2 - 1] = NULL;
-    // process 1
+    // array1[size1 - 1] = NULL;
+    // array2[size2 - 1] = NULL;
+    //  process 1
     char command1[1024];
     command1[0] = '\0';
     //printf("Halo\n"); 
