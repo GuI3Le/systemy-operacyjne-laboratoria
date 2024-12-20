@@ -1,11 +1,9 @@
 #include <stdio.h>
 #include <windows.h>
 #include <ctype.h>
-#include <unistd.h>
 #include <stdlib.h>
 int main(int argc, char *argv[])
 {
-    // printf("argc: %d\n",argc);
     if (argc == 1)
     {
         fprintf(stderr, "error, program called without arguments\n");
@@ -33,65 +31,45 @@ int main(int argc, char *argv[])
     }
     if (argc == 2)
     {
-        // printf("%s\n",argv[1]);
         return atoi(argv[1]);
     }
     if (argc == 3)
     {
-        // printf("%d\n",atoi(argv[2]));
-        //printf("argv2: %s\n",argv[2]);
         if (atoi(argv[1]) >= atoi(argv[2]))
         {
-            // printf("%s\n",argv[1]);
-	//printf("argc3 return: %d",atoi(argv[1]));
             return atoi(argv[1]);
         }
-	//printf("argc3 return: %d",atoi(argv[2]));
         return atoi(argv[2]);
     }
-    // if((argc-1)%2==0){
-    // printf("argc: %d",argc);
     int size1 = argc / 2 + 2;
     int size2 = argc / 2 + 2;
     if (argc % 2 == 0)
     {
-        // printf("nie parzysta");
         size1 -= 1;
     }
     char *array1[size1];
     char *array2[size2];
     array1[0] = argv[0];
     array2[0] = argv[0];
-    // size1-=1;
-    // size2-=1;
     for (int i = 1; i < size1 - 1; i++)
     {
-	//printf("%s\n",argv[1]);
         array1[i] = argv[i];
         array2[i] = argv[size1 + i - 2];
-        // printf("arr2: %s\n",array2[i]);
     }
     if (argc % 2 == 0)
     {
         array2[size2 - 2] = argv[argc - 1];
     }
-    // array1[size1 - 1] = NULL;
-    // array2[size2 - 1] = NULL;
-    //  process 1
     char command1[1024];
     command1[0] = '\0';
-    //printf("Halo\n"); 
-    //printf("%s\n",argv[1]);
     for(int i=0;i<size1-1;i++)
     {
-	    strcat(command1,array1[i]);
-		//printf("%s\n",argv[i]);
-	    if(i<size1-2)
-	    {
-	    	strcat(command1, " ");
-	    }
+        strcat(command1, array1[i]);
+        if (i < size1 - 2)
+        {
+            strcat(command1, " ");
+        }
     }
-    //strcat(command1,'\0');
     printf("Command1: %s|\n",command1);
     char command2[1024];
     command2[0]='\0';
@@ -102,8 +80,7 @@ int main(int argc, char *argv[])
 	    {
 	    	strcat(command2," ");
 		}
-		}
-    //strcat(command2,'\0');
+    }
     printf("Command2: %s|\n",command2);
     PROCESS_INFORMATION pi;
     STARTUPINFO si;
@@ -160,10 +137,8 @@ int main(int argc, char *argv[])
 	);
     DWORD c1ExitCode, c2ExitCode;
     GetExitCodeProcess(pi.hProcess,&c1ExitCode);
-    GetExitCodeProcess(pi2.hProcess,&c2ExitCode);
-    //printf("c1ExitCod: %lu\n",c1ExitCode);
-    //printf("c2ExitCod: %lu\n",c2ExitCode);
-    printf("\n%d\t%d\t%d | ",GetCurrentProcessId(),pi.dwProcessId,(unsigned long)c1ExitCode);
+    GetExitCodeProcess(pi2.hProcess, &c2ExitCode);
+    printf("\n%d\t%d\t%d | ", GetCurrentProcessId(), pi.dwProcessId, c1ExitCode);
     for(int i=1;i<size1-1;i++)
     {
 	    printf("%s ", array1[i]);
