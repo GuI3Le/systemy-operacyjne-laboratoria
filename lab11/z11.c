@@ -29,12 +29,10 @@ void print_letters_cnt() {
 DWORD WINAPI thread_counting(LPVOID lpParam) {
     Params *thread_params = (Params *)lpParam;
     int thread_letters_cnt[26]={0};
-    //int thread_word_cnt = thread_params->end - thread_params->start+1;
     printf("Thread %lu started start=%u, end=%u\n",GetCurrentThreadId(),thread_params->start, thread_params->end);
     for(int i=thread_params->start; i<=thread_params->end;i++) {
         for (int j=0;words[i][j]!=10;j++) {
             thread_letters_cnt[words[i][j]-97]++;
-            //printf("%c", words[i][j]);
         }
     }
     WaitForSingleObject(hMutex,INFINITE);
@@ -54,7 +52,6 @@ int main(int argc, char *argv[]) {
     for(words_cnt = 0; words_cnt < MAX_LINES; words_cnt++)
         if(fgets(line, sizeof(line), f)){
             words[words_cnt] = strdup(line);
-            //	printf("%s", line);
         }
         else
             break;
@@ -68,7 +65,6 @@ int main(int argc, char *argv[]) {
         for(int i=0; i<words_cnt;i++) {
             for (int j=0;words[i][j]!=10;j++) {
                 letters_cnt[words[i][j]-97]++;
-                //printf("%c", words[i][j]);
             }
         }
         t2 = clock();
@@ -78,9 +74,6 @@ int main(int argc, char *argv[]) {
         unsigned int offset = (words_cnt / w);
         unsigned int start = 0;
         unsigned int end = offset-1;
-        //end--;
-        //offset--;
-        //struct Params params = { start, end }; // nie bedzie dzialac?
         HANDLE hThread[w];
         DWORD dwThreadId[w];
         hMutex = CreateMutex(NULL,FALSE,NULL);
@@ -97,9 +90,7 @@ int main(int argc, char *argv[]) {
                 &dwThreadId[i]
             );
             start += offset;
-            //start=start + i;
             end += offset;
-            //end++;
         }
         int mod = words_cnt % w;
         if (mod  != 0) {
@@ -123,7 +114,6 @@ int main(int argc, char *argv[]) {
         }
 
     }
-    //clock_t t2 = clock();
     double t3 = (double)(t2-t1)/CLOCKS_PER_SEC;
     printf("Execution time: %f seconds\n", t3);
     print_letters_cnt();
