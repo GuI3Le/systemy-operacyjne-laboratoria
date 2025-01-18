@@ -9,3 +9,7 @@ lab12/file255.bin
 lab12/lab12r
 lab12/received_file
 lab12/lab12s
+*.txt
+*.bin
+lab10/z10
+*.old
