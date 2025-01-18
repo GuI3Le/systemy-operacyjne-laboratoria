@@ -29,7 +29,7 @@ void print_letters_cnt() {
 DWORD WINAPI thread_counting(LPVOID lpParam) {
     Params *thread_params = (Params *)lpParam;
     int thread_letters_cnt[26]={0};
-    printf("Thread %lu started start=%u, end=%u\n",GetCurrentThreadId(),thread_params->start, thread_params->end);
+    printf("Thread #%lu started start=%u, end=%u\n",GetCurrentThreadId(),thread_params->start, thread_params->end);
     for(int i=thread_params->start; i<=thread_params->end;i++) {
         for (int j=0;words[i][j]!=10;j++) {
             thread_letters_cnt[words[i][j]-97]++;
@@ -40,6 +40,7 @@ DWORD WINAPI thread_counting(LPVOID lpParam) {
         letters_cnt[i]+=thread_letters_cnt[i];
     }
     ReleaseMutex(hMutex);
+    printf("Thread #%lu stopped\n",GetCurrentThreadId());
     return 0;
 }
 
