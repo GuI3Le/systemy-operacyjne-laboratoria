@@ -14,8 +14,6 @@ int main(int argc, char *argv[]){
 		unsigned char *shared_memory = (unsigned char *)shmat(shmid,NULL,0);
 		shared_memory[0]=101;
 		while(shared_memory[0]!=200){
-			// while(shared_memory[0]!=103 && shared_memory[0]!=200){
-			// }
 			while(shared_memory[0]>100 && shared_memory[0]!=200){
 			}
 			if (shared_memory[0]==200) break;
@@ -27,9 +25,6 @@ int main(int argc, char *argv[]){
 		close(fd);
 		shmdt(shared_memory);
 		printf("shared memory detached\n");
-
-
-
 	}
 	return 0;
 }
